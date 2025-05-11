@@ -2,7 +2,7 @@
 # Prim's Algorithm with Min Heap and Adjacency Matrix
 
 ## Author
-Your Name Here
+Sean Lumahan
 
 ## Description
 Briefly describe what your program does and how the code is structured.
