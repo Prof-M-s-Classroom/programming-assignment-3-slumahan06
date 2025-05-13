@@ -20,12 +20,12 @@ Run directly from the IDE.
 ## Time Complexity Analysis
 
 
-| Operation            | Time Complexity   |
-|----------------------|-------------------|
-| Insert in MinHeap    |                   |
-| Extract Min          |                   |
-| Decrease Key         |                   |
-| Prim’s MST Overall   |                   |
+| Operation            | Time Complexity |
+|----------------------|-----------------|
+| Insert in MinHeap    |                 |
+| Extract Min          | O(n)            |
+| Decrease Key         |                 |
+| Prim’s MST Overall   |                 |
 
 _Explain why your MST implementation has the above runtime._
 
