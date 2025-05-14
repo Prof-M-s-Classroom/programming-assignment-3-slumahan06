@@ -22,10 +22,10 @@ Run directly from the IDE.
 
 | Operation            | Time Complexity |
 |----------------------|-----------------|
-| Insert in MinHeap    |                 |
+| Insert in MinHeap    | O(1)            |
 | Extract Min          | O(n)            |
-| Decrease Key         |                 |
-| Prim’s MST Overall   |                 |
+| Decrease Key         | O(n)            |
+| Prim’s MST Overall   | O(n^3)          |
 
 _Explain why your MST implementation has the above runtime._
 

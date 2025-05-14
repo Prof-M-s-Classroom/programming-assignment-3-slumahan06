@@ -9,38 +9,31 @@ public:
         keyArray = new int[capacity];
         position = new int[capacity];
 
+        startEdgeVertex = new int[capacity];
+
         size = 0;
     };
 
-    ~MinHeap() { //TODO: Destructor
+    ~MinHeap() {
         delete heapArray;
         delete keyArray;
         delete position;
+        delete startEdgeVertex;
     };
 
     void insert(int vertex, int key) {
         heapArray[vertex] = vertex;
         position[vertex] = vertex;
         keyArray[vertex] = key;
+        startEdgeVertex[vertex] = vertex;
 
         size++;
     };
 
     int extractMin() { // Step 3 (grab the smallest number)
-        //int min = keyArray[heapArray[0]];
-
-        /*
-        for (int i = 0; i < capacity; i++) {
-            if (keyArray[i] != NULL && keyArray[i] < min) { //isInMinHeap(i)
-                min = i;
-            }
-        }*/
-
         // Use the position array
         // OR get the lowest key value that is NOT 0?
         int min = heapArray[0];
-        //std::cout << "Element 0: " << heapArray[0] << std::endl;
-
 
         for (int i = 0; i < capacity; i++) {
             if (position[i] == 0 && isInMinHeap(i)) {
@@ -61,16 +54,15 @@ public:
             position[heapArray[i]] = i;
         }
 
-        //std::cout << "Element 0 after shift: " << heapArray[0] << std::endl;
-
         size--;
 
         return min; // Return the lowest cost vertex to move to
     };
 
-    void decreaseKey(int vertex, int newKey) {
+    void decreaseKey(int vertex, int newKey, int lowestCostVertex) {
         if (newKey < keyArray[vertex]) { // Check if the new weight would be less than the old weight
             keyArray[vertex] = newKey;
+            startEdgeVertex[vertex] = lowestCostVertex;
             //std::cout << "Changing vertex " << vertex << " to " << newKey << std::endl;
         }
 
@@ -80,7 +72,6 @@ public:
     bool isInMinHeap(int vertex) {
         for (int i = 0; i < size; i++) {
             if (heapArray[i] == vertex) {
-                //std::cout << vertex << ": YES" << std::endl;
                 return true;
             }
         }
@@ -91,12 +82,22 @@ public:
         return size == 0;
     };
 
+    int getKeyValue(int vertex) { // Custom function to get the edge weight from keyArray
+        return keyArray[vertex];
+    }
+
+    int getEdgeStartVertex(int vertex) { // Custom function to get the vertex where the edge starts from
+        return startEdgeVertex[vertex];
+    }
+
 private:
     int* heapArray;        // Heap of vertex indices
     int* keyArray;         // Corresponding key values
     int* position;         // Maps vertex to its position in heap
     int capacity;
     int size;
+
+    int* startEdgeVertex;
 
     void minHeapify(int idx) { //Position array: index = vertex, value = literal position
         // Modify the position array

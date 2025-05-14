@@ -20,7 +20,7 @@ public:
         }
     };
 
-    ~Graph() { //TODO: Destructor
+    ~Graph() {
         delete adjMatrix;
     };
 
@@ -44,18 +44,19 @@ public:
         }
 
         while (!minHeap.isEmpty()) {
-            int lowestCost = minHeap.extractMin();
-            //totalCost += cost;
+            int lowestCostVertex = minHeap.extractMin();
+            int cost = minHeap.getKeyValue(lowestCostVertex);
+            totalCost += cost;
 
-            cout << " -- " << lowestCost << endl; // Prints the next vertex to be reached
-
-            for (int i = 0; i < numVertices; i++) {
-                if (adjMatrix[lowestCost][i] != 0 && minHeap.isInMinHeap(i)) { // If there's an edge
-                    minHeap.decreaseKey(i, adjMatrix[lowestCost][i]);
-                }
+            if (lowestCostVertex != 0) {
+                cout << minHeap.getEdgeStartVertex(lowestCostVertex) << " -- " << lowestCostVertex << " ("<< cost << ")" << endl; // Prints the next vertex to be reached
             }
 
-            //cout << endl;
+            for (int i = 0; i < numVertices; i++) {
+                if (adjMatrix[lowestCostVertex][i] != 0 && minHeap.isInMinHeap(i)) { // If there's an edge
+                    minHeap.decreaseKey(i, adjMatrix[lowestCostVertex][i], lowestCostVertex);
+                }
+            }
         }
 
         cout << "Total Cost: " << totalCost << endl;
