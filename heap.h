@@ -15,10 +15,10 @@ public:
     };
 
     ~MinHeap() {
-        delete heapArray;
-        delete keyArray;
-        delete position;
-        delete startEdgeVertex;
+        delete[] heapArray;
+        delete[] keyArray;
+        delete[] position;
+        delete[] startEdgeVertex;
     };
 
     void insert(int vertex, int key) {
@@ -27,34 +27,32 @@ public:
         keyArray[vertex] = key;
         startEdgeVertex[vertex] = vertex;
 
-        size++;
+        size++; // Increase the counter for the number of vertices in heapArray
     };
 
-    int extractMin() { // Step 3 (grab the smallest number)
-        // Use the position array
-        // OR get the lowest key value that is NOT 0?
+    int extractMin() {
         int min = heapArray[0];
 
         for (int i = 0; i < capacity; i++) {
             if (position[i] == 0 && isInMinHeap(i)) {
-                min = i;
+                min = i; // Grab the smallest number from heapArray using the position array
             }
         }
 
         int savedHeapPosition = 0;
 
-        for (int i = 0; i < capacity; i++) {
+        for (int i = 0; i < capacity; i++) { // Find where exactly the minimum lies in heapArray
             if (heapArray[i] == min) {
                 savedHeapPosition = i;
             }
         }
 
-        for (int i = savedHeapPosition; i < size - 1; i++) {
+        for (int i = savedHeapPosition; i < size - 1; i++) { // Move all subsequent vertices in heapArray down one
             heapArray[i] = heapArray[i + 1];
             position[heapArray[i]] = i;
         }
 
-        size--;
+        size--; // Decrease the size by one
 
         return min; // Return the lowest cost vertex to move to
     };
@@ -62,14 +60,13 @@ public:
     void decreaseKey(int vertex, int newKey, int lowestCostVertex) {
         if (newKey < keyArray[vertex]) { // Check if the new weight would be less than the old weight
             keyArray[vertex] = newKey;
-            startEdgeVertex[vertex] = lowestCostVertex;
-            //std::cout << "Changing vertex " << vertex << " to " << newKey << std::endl;
+            startEdgeVertex[vertex] = lowestCostVertex; // Save the vertex from which the edge starts
         }
 
         minHeapify(vertex);
     };
 
-    bool isInMinHeap(int vertex) {
+    bool isInMinHeap(int vertex) { // Check if vertex is in the heapArray
         for (int i = 0; i < size; i++) {
             if (heapArray[i] == vertex) {
                 return true;
@@ -97,18 +94,17 @@ private:
     int capacity;
     int size;
 
-    int* startEdgeVertex;
+    int* startEdgeVertex; // Saved starting vertices for the lowest found edge
 
-    void minHeapify(int idx) { //Position array: index = vertex, value = literal position
-        // Modify the position array
+    void minHeapify(int idx) { // Modify the position array
         while (idx > 0) {
             if (keyArray[idx] != NULL && keyArray[idx] < keyArray[idx - 1] && isInMinHeap(idx - 1)) {
-                position[idx] = position[idx] - 1;
+                position[idx] = position[idx] - 1; // Swap the two adjacent positions
                 position[idx - 1] = position[idx] + 1;
             }
             idx--;
         }
-    }; //MinHeapify as heap is modified: Step 2
+    };
 };
 
 #endif
