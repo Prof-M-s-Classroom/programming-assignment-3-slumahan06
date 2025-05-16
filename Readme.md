@@ -35,7 +35,7 @@ Extract Min has a time complexity of O(n) since it has to loop through the posit
 
 Decrease Key, in my program, has a time complexity of O(n). While the majority of the function is O(1), including the line where the key is actually decreased, I call minHeapify() in the same function to maintain the order of the heap, which loops through the entire position array, making it an O(n) function.
 
-Overall, my implementation of Prim's MST has a time complexity of O(n^3). The main loop is a while loop that checks if the heap is not empty. Inside is a nested loop that checks all specific matrix combinations with the extractMin() value to see if it should decrease the key for that given vertex. Each time decreaseKey() runs successfully, minHeapify() is called which is another function that loops through the entire position array. These three loops give my program a time complexity of O(n^3), but a smaller time complexity is possible had I implemented several of the functions and arrays differently.
+Overall, my implementation of Prim's MST has a time complexity of O(n^3). The main loop is a while loop that checks if the heap is not empty. Inside is a nested loop that checks all specific matrix combinations with the extractMin() value to see if it should decrease the key for that given vertex. This main part of Prim's MST is O(n^2), but each time decreaseKey() runs successfully, minHeapify() is called which is another function that loops through the entire position array. These three loops give my program a time complexity of O(n^3), but a smaller time complexity is possible had I implemented several of the functions and arrays differently.
 
 ## Assumptions
 
